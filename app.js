@@ -4,6 +4,7 @@ const app = {
     this.max = 0
     this.list = document.querySelector(selectors.listSelector)
 
+
     document.querySelector(selectors.formSelector)
       .addEventListener('submit', this.handleSubmit.bind(this))
   },
@@ -15,14 +16,14 @@ const app = {
     const favButton = document.createElement('button')
     favButton.setAttribute('class','button')
     favButton.style.position = 'absolute'
-    favButton.style.right = '300px'
+    favButton.style.right = '60px'
     favButton.style.height = '25px'
     favButton.textContent = 'Fav'
 
     const deleteButton = document.createElement('button')
     deleteButton.setAttribute('class','button')
     deleteButton.style.position = 'absolute'
-    deleteButton.style.right = '260px'
+    deleteButton.style.right = '20px'
     deleteButton.style.height = '25px'
     deleteButton.style.backgroundColor = 'red'
     deleteButton.textContent = 'X'
@@ -33,6 +34,7 @@ const app = {
     item.appendChild(deleteButton)
     item.appendChild(favButton)
 
+    //item.style.padding = '20px'
     return item
   },
 
@@ -50,6 +52,8 @@ const app = {
     this.flicks.push(flick)
     
     this.max ++
+
+    f.reset()
   },
   
   handleFav: function(ev) {
