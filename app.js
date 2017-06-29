@@ -13,7 +13,7 @@ const app = {
     const item = document.createElement('li')
     item.dataset.id = flick.id
     item.textContent = flick.name
-
+/*
     const favButton = document.createElement('button')
     favButton.setAttribute('class','button')
     favButton.style.position = 'absolute'
@@ -34,7 +34,7 @@ const app = {
 
     item.appendChild(deleteButton)
     item.appendChild(favButton)
-
+*/
     //item.style.padding = '20px'
     return item
   },
