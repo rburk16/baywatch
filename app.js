@@ -3,39 +3,48 @@ const app = {
     this.flicks = []
     this.max = 0
     this.list = document.querySelector(selectors.listSelector)
-
+    this.template = document.querySelector(selectors.templateSelector)
 
     document.querySelector(selectors.formSelector)
-      .addEventListener('submit', this.handleSubmit.bind(this))
+      .addEventListener('submit',this.handleSubmit.bind(this))
+  },
+
+  favFlick: function(flick,ev) {
+    const listItem = ev.target.closest('.flick')
+    flick.fav = listItem.classList.toggle('fav')
+  },
+
+  removeFlick: function(flick,ev) {
+    // remove from the DOM
+    const listItem = ev.target.closest('.flick')
+    listItem.remove()
+
+    // remove from the array
+    const i = this.flicks.indexOf(flick)
+    this.flicks.splice(i, 1)
+  },
+
+  moveUp: function(flick,ev) {
+    const listItem = ev.target.closest('flick')
+  },
+
+  moveDown: function(flick,ev) {
+    const listItem = ev.target.closest('flick')
+
   },
 
   renderListItem: function(flick) {
-    const item = document.createElement('li')
+    const item = this.template.cloneNode(true)
+    item.classList.remove('template')
     item.dataset.id = flick.id
-    item.textContent = flick.name
-/*
-    const favButton = document.createElement('button')
-    favButton.setAttribute('class','button')
-    favButton.style.position = 'absolute'
-    favButton.style.right = '60px'
-    favButton.style.height = '25px'
-    favButton.textContent = 'Fav'
+    item.querySelector('.flick-name').textContent = flick.name
 
-    const deleteButton = document.createElement('button')
-    deleteButton.setAttribute('class','button')
-    deleteButton.style.position = 'absolute'
-    deleteButton.style.right = '20px'
-    deleteButton.style.height = '25px'
-    deleteButton.style.backgroundColor = 'red'
-    deleteButton.textContent = 'X'
+    item.querySelector('button.delete')
+      .addEventListener('click', this.removeFlick.bind(this, flick))
 
-    favButton.addEventListener('click',this.handleFav.bind(this))
-    deleteButton.addEventListener('click',this.handleDelete.bind(this))
-
-    item.appendChild(deleteButton)
-    item.appendChild(favButton)
-*/
-    //item.style.padding = '20px'
+    item.querySelector('button.fav')
+      .addEventListener('click', this.favFlick.bind(this, flick))
+    
     return item
   },
 
@@ -45,30 +54,27 @@ const app = {
     const flick = {
       id: this.max + 1,
       name: f.flickName.value,
+      fav: false,
     }
 
     this.flicks.unshift(flick)
-    
+
     const listItem = this.renderListItem(flick)
-    this.list.insertBefore(listItem,this.list.firstElementChild)
-    
+    this.list.insertBefore(listItem, this.list.firstElementChild)
+
     this.max ++
-
     f.reset()
-  },
-  
-  handleFav: function(ev) {
-    const currentItem = ev.target.parentElement
-    currentItem.style.backgroundColor = 'gray'
-  },
-
-  handleDelete: function(ev) {
-    const j = ev.target.parentElement
-    j.remove(j)
   },
 }
 
 app.init({
   formSelector: 'form#flick-form',
   listSelector: '#flick-list',
+  templateSelector: '.flick.template',
 })
+
+
+/*
+MOVE DOWN
+nextSibling > insertBefore
+*/
