@@ -25,12 +25,25 @@ const app = {
   },
 
   moveUp: function(flick,ev) {
-    const listItem = ev.target.closest('flick')
+    const listItem = ev.target.closest('.flick')
+    const i = this.flicks.indexOf(flick)
+    if(i>0) {
+      const flickPlace = this.flicks[i]
+      this.flicks[i] = this.flicks[i-1]
+      this.flicks[i-1] = flickPlace
+      this.list.insertBefore(listItem,listItem.previousSibling)
+    }
   },
 
   moveDown: function(flick,ev) {
-    const listItem = ev.target.closest('flick')
-
+    const listItem = ev.target.closest('.flick')
+    const i = this.flicks.indexOf(flick)
+    if(i+1 < this.flicks.length) {
+      const flickPlace = this.flicks[i]
+      this.flicks[i] = this.flicks[i+1]
+      this.flicks[i+1] = flickPlace
+      this.list.insertBefore(listItem,listItem.nextSibling.nextSibling)
+    }
   },
 
   renderListItem: function(flick) {
@@ -40,10 +53,18 @@ const app = {
     item.querySelector('.flick-name').textContent = flick.name
 
     item.querySelector('button.delete')
-      .addEventListener('click', this.removeFlick.bind(this, flick))
+      .addEventListener('click', this.removeFlick.bind(this,flick))
 
     item.querySelector('button.fav')
-      .addEventListener('click', this.favFlick.bind(this, flick))
+      .addEventListener('click', this.favFlick.bind(this,flick))
+
+    item.querySelector('button.moveUp')
+      .addEventListener('click', this.moveUp.bind(this,flick))
+    
+    item.querySelector('button.moveDown')
+      .addEventListener('click', this.moveDown.bind(this,flick))
+
+    item.contentEditable = true
     
     return item
   },
@@ -72,9 +93,3 @@ app.init({
   listSelector: '#flick-list',
   templateSelector: '.flick.template',
 })
-
-
-/*
-MOVE DOWN
-nextSibling > insertBefore
-*/
