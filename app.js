@@ -46,6 +46,18 @@ const app = {
     }
   },
 
+  edit: function(flick,ev) {
+    const listItem = ev.target.closest('.flick')
+    const flickName = listItem.querySelector('.flick-name')
+
+    if(flickName.isContentEditable) {
+      flickName.contentEditable = false
+    } else {
+      flickName.contentEditable = true
+    }
+
+  },
+
   renderListItem: function(flick) {
     const item = this.template.cloneNode(true)
     item.classList.remove('template')
@@ -64,7 +76,8 @@ const app = {
     item.querySelector('button.moveDown')
       .addEventListener('click', this.moveDown.bind(this,flick))
 
-    item.contentEditable = true
+    item.querySelector('button.edit')
+      .addEventListener('click',this.edit.bind(this,flick))
     
     return item
   },
