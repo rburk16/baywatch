@@ -1,3 +1,12 @@
+body {
+    background: url(https://steamuserimages-a.akamaihd.net/ugc/687145780028407688/15348C9449447591927B384E4D5A7E6B9D220D63/) no-repeat center center fixed;
+    background-size: cover;
+}
+
+.list-container {
+  background-color: whitesmoke;
+}
+
 #flick-list {
     margin-bottom: 0;
 }
